@@ -13,11 +13,28 @@
 #' @import purrr
 #'
 #' @export
-sing_day <- function(dataset, line, phrase_col){
+sing_line <- function(data, num, phrase_col) {
 
-  phrases <- dataset %>% pull({{phrase_col}})
 
-  #????
+  ## Set up intro line
+
+  num_word <- english::ordinal(num)
+
+  intro <- glue::glue("On the {num_word} day of Christmas, my true love gave to me:")
+
+  ## Sing gift phrases
+
+  phrases <- data %>%
+    pull({{phrase_col}})
+
+
+  phrases[1] <- paste0("and ", phrases[1], ".")
+
+  gift_lines <- str_c(phrases[num:1], collapse = ", \n")
+
+  ## put it together
+
+  glue::glue("{intro} \n{gift_lines}")
 
 
 }

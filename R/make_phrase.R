@@ -16,14 +16,30 @@
 #'
 #' @export
 
+make_phrase <- function(num = 10,
+                        num_word = "ten",
+                        item = "lords",
+                        verb = "a-leaping",
+                        adjective = "",
+                        location = "") {
 
+  ## Replace NAs with blank strings
+  item <- replace_na(item, "")
+  verb <- replace_na(verb, "")
+  adjective <- replace_na(adjective, "")
+  location <- replace_na(location, "")
 
-make_phrase <- function(num, num_word, item, verb, adjective, location){
+  ## Pluralize if needed, or change num word to "a/an"
+  vowel_start <- str_sub(item, 1, 1) %>% str_detect("[aeiou]")
+  if (num > 1) {
+    item <- pluralize_gift(item)
+  } else if (vowel_start) {
+    num_word <- "an"
+  } else {
+    num_word <- "a"
+  }
 
-  verb <- str_replace_na(verb, "")
-
-  #????
-
-
+  glue::glue("{num_word} {adjective} {item} {verb} {location}") %>%
+    str_squish()
 }
 
