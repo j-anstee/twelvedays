@@ -13,7 +13,7 @@
 #' @import purrr
 #'
 #' @export
-sing_line <- function(data, num, phrase_col) {
+sing_day <- function(data, num, phrase_col) {
 
 
   ## Set up intro line
